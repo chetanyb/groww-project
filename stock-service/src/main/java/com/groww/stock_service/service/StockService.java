@@ -24,4 +24,17 @@ public class StockService {
     public Stock saveStock(Stock stock) {
         return stockRepository.save(stock);
     }
+
+    public Stock updateStock(Stock stock) {
+        Stock existingStock = stockRepository.findBySymbol(stock.getSymbol())
+                .orElseThrow(() -> new RuntimeException("Stock not found"));
+        existingStock.setOpenPrice(stock.getOpenPrice());
+        existingStock.setClosePrice(stock.getClosePrice());
+        existingStock.setHighPrice(stock.getHighPrice());
+        existingStock.setLowPrice(stock.getLowPrice());
+        existingStock.setLastTradedPrice(stock.getLastTradedPrice());
+        existingStock.setVolumeTraded(stock.getVolumeTraded());
+        existingStock.setMarketType(stock.getMarketType());
+        return stockRepository.save(existingStock);
+    }
 }

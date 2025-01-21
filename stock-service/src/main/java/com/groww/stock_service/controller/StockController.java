@@ -2,7 +2,9 @@ package com.groww.stock_service.controller;
 
 import com.groww.stock_service.model.Stock;
 import com.groww.stock_service.service.StockService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,7 +27,12 @@ public class StockController {
     }
 
     @PostMapping
-    public Stock saveStock(@RequestBody Stock stock) {
+    public Stock saveStock(@Valid @RequestBody Stock stock) {
         return stockService.saveStock(stock);
+    }
+
+    @PutMapping
+    public ResponseEntity<?> updateStock(@Valid @RequestBody Stock stock) {
+        return ResponseEntity.ok(stockService.updateStock(stock));
     }
 }
